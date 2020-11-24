@@ -8,7 +8,7 @@ Resources:
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: verifyStravaWebhook
-      CodeUri: src/Function
+      CodeUri: src/verifyStravaWebhook
       Handler: index.handler
       Runtime: nodejs12.x
       MemorySize: 3008
@@ -35,7 +35,7 @@ Resources:
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: dataEventFromStrava
-      CodeUri: src/Function2
+      CodeUri: src/dataEventFromStrava
       Handler: index.handler
       Runtime: nodejs12.x
       MemorySize: 3008
