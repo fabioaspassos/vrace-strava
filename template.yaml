@@ -141,8 +141,8 @@ Resources:
             RestApiId: !Ref Api
       Environment:
         Variables:
-          TABLE_NAME: !Ref athleteAutorization
-          TABLE_ARN: !GetAtt athleteAutorization.Arn
+          TB_ACTIVITIES: !Ref athleteAutorization
+          TB_ACTIVITIES_ARN: !GetAtt athleteAutorization.Arn
           C_ID: '54496'
           C_SC: da573e0f74693df6b74a31a5e5ca20ad289e2025
   athleteAutorization:
