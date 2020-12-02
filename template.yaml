@@ -43,10 +43,15 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref vraceEventStrava
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt QueueEvents.QueueName
       Environment:
         Variables:
           TABLE_NAME: !Ref vraceEventStrava
           TABLE_ARN: !GetAtt vraceEventStrava.Arn
+          QUEUE_NAME: !GetAtt QueueEvents.QueueName
+          QUEUE_ARN: !GetAtt QueueEvents.Arn
+          QUEUE_URL: !Ref QueueEvents
       Events:
         ApiPOSTvracewebhookstrava:
           Type: Api
