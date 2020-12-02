@@ -95,8 +95,31 @@ Resources:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${exchangeAutorization.Arn}/invocations
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${dataEventFromStrava.Arn}/invocations
               responses: {}
+          /v1/infraction-reports/cancel:
+            post:
+              tags:
+                - Cancelamento de relato de infração
+              description: |
+                Notifica o DICT com o cancelamento do relato de infração
+              requestBody:
+                description: |
+                  Descrição dos campos para cancelamento de relato de infração
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/InfractionReportCancelRequestSchema'
+              responses:
+                "200":
+                  description: Cancelamento realizado com sucesso
+                "400":
+                  description: bad input parameter
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${dataEventFromStrava.Arn}/invocations
         components:
           securitySchemes:
             authorizer:
