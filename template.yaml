@@ -97,6 +97,227 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${exchangeAutorization.Arn}/invocations
               responses: {}
+        components:
+          securitySchemes:
+            authorizer:
+              type: apiKey
+              name: x-api-key
+              in: header
+          schemas:
+            4xxErrorSchema:
+              type: object
+              properties:
+                message:
+                  type: string
+                error_code:
+                  type: integer
+            BankBilletSchema:
+              type: object
+              properties:
+                customer:
+                  $ref: '#/components/schemas/CustomerSchema'
+                fee_amount:
+                  type: number
+                  format: double
+                amount:
+                  type: number
+                  format: double
+                due_date:
+                  type: string
+                  format: date
+                our_number:
+                  type: string
+                  readOnly: true
+                digitable_line:
+                  type: string
+                  readOnly: true
+                bar_code:
+                  type: string
+                  readOnly: true
+                issue_date:
+                  type: string
+                  format: date
+                  readOnly: true
+            CustomerSchema:
+              type: object
+              properties:
+                name:
+                  type: string
+                tax_id:
+                  type: string
+                address:
+                  $ref: '#/components/schemas/AddressSchema'
+            AddressSchema:
+              type: object
+              properties:
+                street_address:
+                  type: string
+                zip_code:
+                  type: string
+                city:
+                  type: string
+                distirct:
+                  type: string
+                state:
+                  type: string
+            ClaimSchema:
+              type: object
+              properties:
+                key:
+                  type: string
+                keyType:
+                  type: string
+                type:
+                  type: string
+                account:
+                  type: object
+                  properties:
+                    participant:
+                      type: string
+                    branch:
+                      type: string
+                    id:
+                      type: integer
+                    accountType:
+                      type: string
+                    openingDate:
+                      type: string
+                person:
+                  type: object
+                  properties:
+                    taxIdNumber:
+                      type: string
+                    name:
+                      type: string
+                    tradeName:
+                      type: string
+                    type:
+                      type: string
+            ClaimCancelSchema:
+              type: object
+              properties:
+                claim:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                reason_type:
+                  type: object
+                  properties:
+                    id: 
+                      type: integer
+                    name: 
+                      type: string
+            ClaimCompleteSchema:
+              type: object
+              properties:
+                claim:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                request_id:
+                  type: string
+            ClaimAcknowledgeSchema:
+              type: object
+              properties:
+                claim:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                reason_type:
+                  type: object
+                  properties:
+                     id:
+                        type: integer
+                     name:
+                        type: string
+            ClaimConfirmSchema:
+              type: object
+              properties:
+                claim:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                reason_type:
+                  type: object
+                  properties:
+                     id:
+                        type: integer
+                     name:
+                        type: string
+            UpdateTransactionKeySchema:
+              type: object
+              properties:
+                account:
+                  $ref: '#/components/schemas/AccountSchema'
+                motive:
+                  type: string
+            AccountSchema:
+              type: object
+              properties:
+                id:
+                  type: string
+                participant:
+                  type: string
+                branch:
+                  type: string
+                type:
+                  type: string
+                creation_date:
+                  type: string
+            CidFileSchema:
+              type: object
+              properties:
+                participant:
+                  type: integer
+                key:
+                  type: object
+                  properties:
+                    cidtype:
+                      type: object
+                      properties:
+                        id: long
+                        name: string
+            InfractionReportRequestSchema:
+              type: object
+              properties:
+                infractionReport:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+            InfractionReportCloseRequestSchema:
+              type: object
+              properties:
+                infractionReport:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                participant:
+                  type: long
+                analysisResult:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                analysisDetails:
+                  type: string
+            InfractionReportCancelRequestSchema:
+              type: object
+              properties:
+                infractionReport:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                participant:
+                  type: long
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
   activitiesStrava:
